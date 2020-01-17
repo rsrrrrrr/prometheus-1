@@ -17,6 +17,7 @@ import (
 	"context"
 	"errors"
 	"strings"
+	"sort"
 	"testing"
 	"time"
 
@@ -1101,7 +1102,9 @@ func TestSubquerySelector(t *testing.T) {
 
 			res := qry.Exec(test.Context())
 			testutil.Equals(t, res.Err, c.Result.Err)
-			testutil.Equals(t, res.Value, c.Result.Value)
+			mat := res.Value.(Matrix)
+			sort.Sort(mat)
+			testutil.Equals(t, mat, c.Result.Value)
 		}
 	}
 }

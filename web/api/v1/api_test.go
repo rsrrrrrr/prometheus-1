@@ -1741,6 +1741,14 @@ func TestStreamReadEndpoint(t *testing.T) {
 		t.Fatalf("Expected 5 result, got %d", len(results))
 	}
 
+	sort.Slice(results, func(i, j int) bool {
+		if results[i].QueryIndex != results[j].QueryIndex {
+			return results[i].QueryIndex < results[j].QueryIndex
+		}
+		// Only the foo labels are different.
+		return results[i].ChunkedSeries[0].Labels[4].Value < results[j].ChunkedSeries[0].Labels[4].Value
+	})
+
 	testutil.Equals(t, []*prompb.ChunkedReadResponse{
 		{
 			ChunkedSeries: []*prompb.ChunkedSeries{
