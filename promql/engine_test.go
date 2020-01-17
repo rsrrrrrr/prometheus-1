@@ -16,8 +16,8 @@ package promql
 import (
 	"context"
 	"errors"
-	"strings"
 	"sort"
+	"strings"
 	"testing"
 	"time"
 
